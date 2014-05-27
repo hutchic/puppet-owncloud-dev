@@ -1,4 +1,4 @@
-class owncloud::from_source () {
+class owncloud-dev::from_source () {
 
   class { 'apache':
     mpm_module => prefork
