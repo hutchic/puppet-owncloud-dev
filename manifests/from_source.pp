@@ -14,7 +14,7 @@ class owncloud-dev::from_source () {
     ]
   }
 
-  php::module { [ 'gd', 'mysql' ]:
+  php::module { [ 'gd', 'mysql', 'imagemagick' ]:
     require  => Class['php'],
   }
 
