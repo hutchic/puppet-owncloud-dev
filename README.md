@@ -9,3 +9,4 @@ This module will install and configure owncloud from source
 - puppetlabs-mysql
 - example42-php
 - puppetlabs-git
+- mhuffnagle-makepuppet

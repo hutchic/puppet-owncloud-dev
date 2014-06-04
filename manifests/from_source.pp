@@ -4,6 +4,7 @@ class owncloud-dev::from_source () {
     mpm_module => prefork
   }
   include 'apache::mod::php'
+  include 'make'
   apache::vhost { 'owncloud.dev':
     port               => '80',
     docroot            => '/var/www/',
@@ -14,7 +15,7 @@ class owncloud-dev::from_source () {
     ]
   }
 
-  php::module { [ 'gd', 'mysql', 'imagemagick' ]:
+  php::module { [ 'gd', 'mysql' ]:
     require  => Class['php'],
   }
 
