@@ -55,27 +55,72 @@ class owncloud-dev::from_source () {
     ensure   => directory,
   }
 
-  vcsrepo { '/var/www/3rdparty':
-    ensure   => present,
-    provider => git,
-    source   => 'https://github.com/owncloud/3rdparty.git',
-    revision => 'master',
-    user     => 'www-data',
-    require  => [
-      Class['git'],
-      File['/var/www']
-    ],
+  file { '/var/www/apps':
+    owner    => 'www-data',
+    mode     => 600,
+    group    => 'www-data',
+    ensure   => directory,
   }
 
-  vcsrepo { '/var/www/apps':
+  owncloud_dev::app{ 'news':
+    dir      => '/var/www/apps/news',
+    source   => 'https://github.com/owncloud/news.git',
+  }
+
+  owncloud_dev::app{ 'gallery':
+    dir      => '/var/www/apps/gallery',
+    source   => 'https://github.com/owncloud/gallery.git',
+  }
+
+  owncloud_dev::app{ 'music':
+    dir      => '/var/www/apps/music',
+    source   => 'https://github.com/owncloud/music.git',
+  }
+
+  owncloud_dev::app{ 'notes':
+    dir      => '/var/www/apps/notes',
+    source   => 'https://github.com/owncloud/notes.git',
+  }
+
+  owncloud_dev::app{ 'calendar':
+    dir      => '/var/www/apps/calendar',
+    source   => 'https://github.com/owncloud/calendar.git',
+  }
+
+  owncloud_dev::app{ 'contacts':
+    dir      => '/var/www/apps/contacts',
+    source   => 'https://github.com/owncloud/contacts.git',
+  }
+
+  owncloud_dev::app{ 'documents':
+    dir      => '/var/www/apps/documents',
+    source   => 'https://github.com/owncloud/documents.git',
+  }
+
+  owncloud_dev::app{ 'chat':
+    dir      => '/var/www/apps/chat',
+    source   => 'https://github.com/owncloud/chat.git',
+  }
+
+  owncloud_dev::app{ 'bookmarks':
+    dir      => '/var/www/apps/bookmarks',
+    source   => 'https://github.com/owncloud/bookmarks.git',
+  }
+}
+
+define owncloud_dev::app(
+   $dir,
+   $source,
+) {
+  vcsrepo { $dir:
     ensure   => present,
     provider => git,
-    source   => 'https://github.com/owncloud/apps.git',
+    source   => $source,
     revision => 'master',
     user     => 'www-data',
-    require  => [
+    require   => [
       Class['git'],
-      File['/var/www']
-    ],
+      File['/var/www/apps']
+    ]
   }
 }
