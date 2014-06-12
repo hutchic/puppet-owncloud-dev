@@ -1,10 +1,14 @@
 class owncloud-dev::from_source () {
+  include 'apache::mod::php'
+  include 'make'
+  include 'mysql::server'
+  include 'git'
+  include 'composer'
 
   class { 'apache':
     mpm_module => prefork
   }
-  include 'apache::mod::php'
-  include 'make'
+
   apache::vhost { 'owncloud.dev':
     port               => '80',
     docroot            => '/var/www/owncloud/',
@@ -19,7 +23,6 @@ class owncloud-dev::from_source () {
     require  => Class['php'],
   }
 
-  include 'mysql::server'
   mysql::db { 'owncloud':
     user     => 'owncloud',
     password => 'ownclouddbpassword',
@@ -34,7 +37,6 @@ class owncloud-dev::from_source () {
     ensure   => directory,
   }
 
-  include 'git'
   vcsrepo { '/var/www/owncloud':
     ensure   => present,
     provider => git,
