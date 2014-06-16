@@ -1,8 +1,4 @@
 class owncloud-dev::install inherits owncloud-dev {
-  class { 'apache':
-    mpm_module => prefork
-  }
-
   apache::vhost { 'owncloud.dev':
     port               => '80',
     docroot            => '/var/www/owncloud/',
